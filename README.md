@@ -2,13 +2,32 @@
 
 forked fron jaredhanson/passport-oauth2
 
-## Purpose
+### 1. Purpose
 
-is that provide openknowl-passport profile parser
+is to provide openknowl-passport profile parser
 
-## Customizing
+### 2. Usage
 
-### 1. passport strategy
+if you want more practical example, see https://github.com/jaredhanson/passport-facebook
+
+```javascript
+
+OpenknowlStrategy = require('passport-openknowl').Strategy;
+
+
+passport.use(new OpenknowlStrategy({
+  clientID: OPENKNOWL_APP_ID,
+  clientSecret: OPENKNOWL_APP_SECRET,
+  callbackURL: OPENKNOWL_CALLBACK_URL
+}, function(accessToken, refreshToken, profile, done) {
+     User.findOrCreate(profile.id, ...
+}));
+
+```
+
+### 3. Customizing
+
+#### 3.1 passport strategy
 
 ```javascript
 
@@ -26,7 +45,7 @@ function OAuth2Strategy(options, verify) {
   ...
 ```
 
-### 2. profile
+#### 3.2 profile
 
 ```javascript
 
@@ -58,7 +77,7 @@ OAuth2Strategy.prototype.userProfile = function(accessToken, done) {
 };
 ```
 
-### 3. References
+### 4. References
 
 1. https://github.com/auth0/passport-linkedin-oauth2/blob/master/lib/oauth2.js#L23
 
