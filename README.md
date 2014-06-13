@@ -12,8 +12,8 @@ if you want more practical example, see https://github.com/jaredhanson/passport-
 
 ```javascript
 
-OpenknowlStrategy = require('passport-openknowl').Strategy;
-
+// passport.js
+OpenknowlStrategy = require('app/lib/passport-openknowl').Strategy;
 
 passport.use(new OpenknowlStrategy({
   clientID: OPENKNOWL_APP_ID,
@@ -22,6 +22,13 @@ passport.use(new OpenknowlStrategy({
 }, function(accessToken, refreshToken, profile, done) {
      User.findOrCreate(profile.id, ...
 }));
+
+// route.js
+oauthApi.get('/openknowl', passport.authenticate('openknowl'));
+oauthApi.get('/openknowl/callback',
+	       passport.authenticate('openknowl', {
+		 successRedirect: '/',
+		 failureRedirect: '/'}));
 
 ```
 
