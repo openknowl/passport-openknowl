@@ -2,13 +2,39 @@
 
 forked fron jaredhanson/passport-oauth2
 
-## Purpose
+### 1. Purpose
 
-is that provide openknowl-passport profile parser
+is to provide openknowl-passport profile parser
 
-## Customizing
+### 2. Usage
 
-### 1. passport strategy
+if you want more practical example, see https://github.com/jaredhanson/passport-facebook
+
+```javascript
+
+// passport.js
+OpenknowlStrategy = require('app/lib/passport-openknowl').Strategy;
+
+passport.use(new OpenknowlStrategy({
+  clientID: OPENKNOWL_APP_ID,
+  clientSecret: OPENKNOWL_APP_SECRET,
+  callbackURL: OPENKNOWL_CALLBACK_URL
+}, function(accessToken, refreshToken, profile, done) {
+     User.findOrCreate(profile.id, ...
+}));
+
+// route.js
+oauthApi.get('/openknowl', passport.authenticate('openknowl'));
+oauthApi.get('/openknowl/callback',
+	       passport.authenticate('openknowl', {
+		 successRedirect: '/',
+		 failureRedirect: '/'}));
+
+```
+
+### 3. Customizing
+
+#### 3.1 passport strategy
 
 ```javascript
 
@@ -17,29 +43,30 @@ is that provide openknowl-passport profile parser
 function OAuth2Strategy(options, verify) {
   ...
   ...
-  passport.Strategy.call(this);
+  // modify here
   this.name = 'openknowl';
-  this.profileUrl = 'https://accounts.openknowl.com/api/me';
-  this.authorizationURL = 'https://accounts.openknowl.com/api/token';
-  this.tokenUrl = 'https://accounts.openknowl.com/api/token';
+  options.profileUrl = options.profileURL || 'https://ac-dev.openknowl.com/api/me';
+  options.authorizationURL = options.profileURL || 'https://ac-dev.openknowl.com/api/token';
+  options.tokenuRL = options.profileURL || 'https://ac-dev.openknowl.com/api/token';
   ...
   ...
 ```
 
-### 2. profile
+#### 3.2 profile
 
 ```javascript
 
 // lib/strategy.js
 
 OAuth2Strategy.prototype.userProfile = function(accessToken, done) {
+  // modify here
   this._oauth2.get(this.profileUrl, accessToken, function (err, body, res) {
     if (err) { return done(new InternalOAuthError('failed to fetch user profile', err)); }
 
     try {
       var json = JSON.parse(body);
 
-      var profile = { provider: 'linkedin' };
+      var profile = { provider: 'openknowl' };
 
       profile.id = json.id;
       profile.name = json.username;
@@ -57,7 +84,6 @@ OAuth2Strategy.prototype.userProfile = function(accessToken, done) {
 };
 ```
 
-### 3. References
+### 4. References
 
 1. https://github.com/auth0/passport-linkedin-oauth2/blob/master/lib/oauth2.js#L23
-
