@@ -1,7 +1,7 @@
 {
-  "name": "passport-oauth2",
-  "version": "1.1.2",
-  "description": "OAuth 2.0 authentication strategy for Passport.",
+  "name": "passport-openknowl",
+  "version": "1.0.0",
+  "description": "OAuth 2.0 based openknowl authentication strategy for Passport.",
   "keywords": [
     "passport",
     "auth",
@@ -13,23 +13,18 @@
     "oauth2"
   ],
   "author": {
-    "name": "Jared Hanson",
-    "email": "jaredhanson@gmail.com",
-    "url": "http://www.jaredhanson.net/"
+    "name": "Openknowl",
+    "email": "cio@openknowl.com",
+    "url": "https://www.openknowl.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jaredhanson/passport-oauth2.git"
+    "url": "https://github.com/openknowl/passport-openknowl.git"
   },
   "bugs": {
-    "url": "http://github.com/jaredhanson/passport-oauth2/issues"
+    "url": "https://github.com/openknowl/passport-openknowl/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/MIT"
-    }
-  ],
+  "license": "MIT",
   "main": "./lib",
   "dependencies": {
     "passport-strategy": "1.x.x",
